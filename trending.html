@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Details</title>
+    <link rel="stylesheet" href="trending.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="" alt="Backdrop" id="backdrop-img" class="backdrop-img">
+            <div class="header-content">
+                <h1 id="title">Loading...</h1>
+                <div class="metadata" id="header-metadata"></div>
+            </div>
+        </header>
+
+        <div class="movie-info">
+            <div class="poster">
+                <img src="" alt="Poster" id="poster-img">
+            </div>
+            <div class="details">
+                <div class="genre-list" id="genre-list"></div>
+                <p id="description"></p>
+                <div class="metadata" id="details-metadata"></div>
+                <div class="crew">
+                    <p><strong>Director:</strong> <span id="director"></span></p>
+                    <p><strong>Writers:</strong> <span id="writers"></span></p>
+                    <p><strong>Stars:</strong> <span id="actors"></span></p>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title">Similar Movies</h2>
+        <div class="movies-grid" id="similar-movies"></div>
+    </div>
+
+    <footer>
+        <p>© 2025 FilManiac. All rights reserved.</p>
+    </footer>
+
+    <script src="trending.js"></script>
+</body>
+</html>

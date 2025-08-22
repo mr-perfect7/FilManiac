@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Details - The Dark Knight</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/movie_details.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="backdrop"></div>
+            <img src="" alt="Movie Backdrop" class="backdrop-img " id="backdrop-img">
+            <div class="header-content">
+                <h1 id="title">Loading...</h1>
+                <div class="metadata" id="header-metadata">
+                    <span><i class="fas fa-star"></i> Loading...</span>
+                </div>
+                <div class="action-buttons">
+                    <a href="#" class="btn btn-play"><i class="fas fa-play"></i> Play Now</a>
+                    <a href="#" class="btn btn-trailer"><i class="fas fa-play-circle"></i> Watch Trailer</a>
+                </div>
+            </div>
+        </header>
+        
+        <div class="movie-info">
+            <div class="poster">
+                <img src="" alt="Movie Poster" id="poster-img">
+            </div>
+            
+            <div class="details">
+                <div class="genre-list" id="genre-list">
+                    <span class="genre">Loading...</span>
+                </div>
+                
+                <p id="description">
+                    Loading...
+                </p>
+                
+                <div class="metadata" id="details-metadata">
+                    <span><i class="fas fa-globe"></i> Loading...</span>
+                </div>
+                
+                <div class="crew">
+                    <h3 class="section-title">Director & Cast</h3>
+                    <p><strong>Director:</strong> <span id="director">Loading...</span></p>
+                    <p><strong>Writers:</strong> <span id="writers">Loading...</span></p>
+                    <p><strong>Stars:</strong> <span id="actors">Loading...</span></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="loader" id="loader"></div>
+        
+        <h2 class="section-title">Similar Movies</h2>
+        <div class="movies-grid" id="similar-movies">
+            <div class="movie-card">
+                <div class="movie-poster" style="background: #1a1a1a; display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-film" style="font-size: 3rem; color: #333;"></i>
+                </div>
+                <div class="movie-details">
+                    <div class="movie-title">Loading similar movies...</div>
+                    <div class="movie-meta">
+                        <span>--</span>
+                        <span>--/10</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>© 2025 FimManiac. All rights reserved.</p>
+    </footer>
+
+    <script src="/movie_details.js"></script>
+</body>
+</html>
