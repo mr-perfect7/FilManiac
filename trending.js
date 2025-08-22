@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
     movie.similar.results.slice(10,16).forEach(m => {
       const card = document.createElement('a');
       card.className = 'movie-card';
-      card.href = `movie_details.html?id=${m.id}`;
+      // card.href = `movie_details.html?id=${m.id}`;
       card.innerHTML = `
         <img src="https://image.tmdb.org/t/p/w300${m.poster_path}" alt="${m.title}" class="movie-poster">
         <div class="movie-details">
