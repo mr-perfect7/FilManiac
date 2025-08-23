@@ -11,9 +11,8 @@ const heroFilmType = document.getElementById('hero-film-type');
 const heroDate = document.getElementById('hero-date');
 const heroPlot = document.getElementById('hero-plot');
 const heroRate = document.getElementById('hero-rate');
-
 // --- API Keys ---
-const omdbApiKey = '1aca20d4'; 
+// const omdbApiKey = '1aca20d4'; 
 const tmdbApiKey = "dacbf658ae443d8ce2c396b74f18dcfc";
 
 // --- Global Variables ---
@@ -183,6 +182,8 @@ async function fetchLiveSearchResults(query) {
   }
 }
 
+
+
 function toggleFavorite(id, movie) {
   if (favorites[id]) delete favorites[id];
   else favorites[id] = movie;
@@ -238,6 +239,7 @@ document.getElementById('hero-play').addEventListener('click', (e) => {
   e.preventDefault();
   alert('Playback functionality is a demo.');
 });
+
 
 // --- TMDB Trending Fetch ---
 async function fetchTrendingMovies() {
