@@ -1,9 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // const API_KEY = 'YOUR_TMDB_API_KEY';
   const API_KEY = 'dacbf658ae443d8ce2c396b74f18dcfc'; 
 
   const params = new URLSearchParams(window.location.search);
-  const movieId = params.get('id');
+  let movieId = params.get('id');
 
   if (!movieId) return alert("No movie ID provided!");
 
@@ -34,10 +33,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Similar movies
     const similarContainer = document.getElementById('similar-movies');
     similarContainer.innerHTML = '';
-    movie.similar.results.slice(10,16).forEach(m => {
-      const card = document.createElement('a');
+    movie.similar.results.slice(0,6).forEach(m => {
+      const card = document.createElement('div');
       card.className = 'movie-card';
-      // card.href = `movie_details.html?id=${m.id}`;    
+      card.setAttribute('data-id', m.id);
       card.innerHTML = `
         <img src="https://image.tmdb.org/t/p/w300${m.poster_path}" alt="${m.title}" class="movie-poster">
         <div class="movie-details">
@@ -50,4 +49,24 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   fetchMovieDetails(movieId);
+
+  // Click handler for similar movies
+  document.getElementById('similar-movies').addEventListener('click', e => {
+    const card = e.target.closest('.movie-card');
+    if (!card) return;
+    movieId = card.getAttribute('data-id');
+    fetchMovieDetails(movieId);
+    window.history.pushState({}, '', `?id=${movieId}`);
+    window.scrollTo(0,0);
+  });
+
+  // Handle back/forward navigation
+  window.addEventListener('popstate', () => {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+    if (id) {
+      movieId = id;
+      fetchMovieDetails(movieId);
+    }
+  });
 });

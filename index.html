@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +8,6 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
   <header>
     <nav>
@@ -22,7 +20,6 @@
           <li><a href="#" id="kids-link">Kids</a></li>
         </ul>
       </div>
-
       <div class="search_user">
         <input type="text" placeholder="Search for movies, series..." id="search_input">
         <div class="search" id="search-results">
@@ -30,11 +27,9 @@
       </div>
     </nav>
   </header>
-
   <main>
     <div class="hero-container">
       <video src="video/john wick.webm" class="background-video" autoplay muted loop></video>
-
       <div class="hero-content">
         <h1 id="hero-title">Welcome to FilManiac</h1>
         <p id="hero-plot">Discover trending movies, search for your favorites, and create a personalized watchlist.
@@ -46,12 +41,11 @@
           <h3 id="hero-rate"><span>IMDB</span><i class="bi bi-star-fill"></i> N/A</h3>
         </div>
         <div class="btns">
-          <a href="#" id="hero-play">Play <i class="bi bi-play-fill"></i></a>
-          <a href="#" id="hero-download" onclick="alert('Download button clicked!')"><i class="bi bi-download"></i> Download</a>
+          <a href="#" id="hero-play" >Play <i class="bi bi-play-fill"></i></a>
+          <a href="#" id="hero-download" ><i class="bi bi-download"></i> Download</a>
         </div>
       </div>
     </div>
-
     <div class="section" id="trending-section">
       <div class="section-header">
         <h2><i class="bi bi-fire"></i> Trending Now</h2>
@@ -59,19 +53,14 @@
       </div>
       <div class="cards-container" id="trending-container"></div>
     </div>
-
     <div class="section" id="all-section">
       <div class="section-header">
         <h2><i class="bi bi-collection-play"></i> All Movies</h2>
-        <!-- <div class="pagination-container" id="all-pagination"></div> -->
       </div>
-
       <div class="cards-container" id="all-container"></div>
-
     </div>
     <div id="pagination-center" style="display: flex; justify-content: center; justify-items: center;">
       <div class="pagination-container" id="all-pagination"></div>
-
     </div>
     <div class="section" id="favorites-section">
       <div class="section-header">
@@ -84,5 +73,4 @@
   <script src="https://unpkg.com/lenis@1.3.8/dist/lenis.min.js"></script>
   <script src="app.js"></script>
 </body>
-
 </html>
