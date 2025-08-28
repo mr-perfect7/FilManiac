@@ -77,12 +77,12 @@
   <script>
 function downloadVideo() {
     // URL of the video file
-    const videoUrl = 'video/john wick.webm'';
+    const videoUrl = 'video/john wick.webm';
     
     // Create a temporary link element
     const a = document.createElement('a');
     a.href = videoUrl;
-    a.download = 'video/john wick.webm'; // File name for download
+    a.download = 'john_wick.webm'; 
     document.body.appendChild(a);
     a.click(); // Trigger download
     document.body.removeChild(a);
