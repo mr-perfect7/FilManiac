@@ -45,20 +45,7 @@
           <a href="#" id="hero-download" onclick="downloadVideo()" ><i class="bi bi-download"></i> Download</a>
           
 
-<script>
-function downloadVideo() {
-    // URL of the video file
-    const videoUrl = 'video/myvideo.mp4';
-    
-    // Create a temporary link element
-    const a = document.createElement('a');
-    a.href = videoUrl;
-    a.download = 'myvideo.mp4'; // File name for download
-    document.body.appendChild(a);
-    a.click(); // Trigger download
-    document.body.removeChild(a);
-}
-</script>
+
 
         </div>
       </div>
@@ -87,6 +74,20 @@ function downloadVideo() {
       </div>
     </div>
   </main>
+  <script>
+function downloadVideo() {
+    // URL of the video file
+    const videoUrl = 'video/myvideo.mp4';
+    
+    // Create a temporary link element
+    const a = document.createElement('a');
+    a.href = videoUrl;
+    a.download = 'video/john wick.webm'; // File name for download
+    document.body.appendChild(a);
+    a.click(); // Trigger download
+    document.body.removeChild(a);
+}
+</script>
   <script src="https://unpkg.com/lenis@1.3.8/dist/lenis.min.js"></script>
   <script src="app.js"></script>
 </body>
