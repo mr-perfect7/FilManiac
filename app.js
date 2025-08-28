@@ -476,7 +476,7 @@ function renderPagination(totalResults, page) {
   const createBtn = (text, disabled, onClick) => {
     const btn = document.createElement('button');
     btn.innerHTML = text;
-    // btn.disabled = disabled;
+    btn.disabled = disabled;
     btn.classList.add('page-btn');
     btn.addEventListener('click', onClick);
     return btn;
