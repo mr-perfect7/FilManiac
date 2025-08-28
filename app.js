@@ -336,8 +336,9 @@ let currentType = '';
 let currentPage = 1;
 let allSearchQuery = 'action';
 let favorites = JSON.parse(localStorage.getItem('favorites')) || {};
-let cachedTrending = []; // For fallback
+let cachedTrending = [];
 
+// Genre Mapping
 const genreMap = {
   28: "Action", 12: "Adventure", 16: "Animation", 35: "Comedy", 80: "Crime",
   99: "Documentary", 18: "Drama", 10751: "Family", 14: "Fantasy", 36: "History",
@@ -345,6 +346,7 @@ const genreMap = {
   10770: "TV Movie", 53: "Thriller", 10752: "War", 37: "Western"
 };
 
+// Fetch helper
 const fetchJson = async (url) => {
   try {
     const res = await fetch(url);
@@ -355,15 +357,16 @@ const fetchJson = async (url) => {
   }
 };
 
+// Toggle favorite
 function toggleFavorite(id, movie) {
-  if (favorites[id]) {
-    delete favorites[id];
-  } else {
-    favorites[id] = { ...movie, imdbID: id };
-  }
+  if (favorites[id]) delete favorites[id];
+  else favorites[id] = { ...movie, imdbID: id };
   localStorage.setItem('favorites', JSON.stringify(favorites));
+  updateHeartIconsFor(id);
+  displayFavorites();
 }
 
+// Update hearts everywhere
 function updateHeartIconsFor(id) {
   [allContainer, trendingContainer, searchResultsContainer, favoritesContainer].forEach(sec => {
     if (!sec) return;
@@ -380,6 +383,7 @@ function updateHeartIconsFor(id) {
   });
 }
 
+// Create a movie card
 function createCard(movie, isSearchResult = false, isTrending = false) {
   const treatAsTmdb = isTrending || (!!movie.id && !movie.imdbID);
   const imdbID = movie.imdbID || (treatAsTmdb ? `tmdb-${movie.id}` : null);
@@ -392,9 +396,8 @@ function createCard(movie, isSearchResult = false, isTrending = false) {
 
   const card = document.createElement(isSearchResult ? 'a' : 'div');
   card.classList.add('card');
-  if (isSearchResult) {
-    card.href = treatAsTmdb ? `trending.html?id=${movie.id}` : `movie.html?id=${imdbID}`;
-  }
+  if (isSearchResult) card.href = treatAsTmdb ? `trending.html?id=${movie.id}` : `movie.html?id=${imdbID}`;
+
   card.innerHTML = `
     <img src="${posterUrl}" alt="${title}">
     <div class="cont">
@@ -415,8 +418,6 @@ function createCard(movie, isSearchResult = false, isTrending = false) {
       e.preventDefault();
       e.stopPropagation();
       toggleFavorite(imdbID, { ...movie, Poster: posterUrl, Title: title, Year: year, imdbRating: rating });
-      updateHeartIconsFor(imdbID);
-      displayFavorites();
     });
   }
 
@@ -430,26 +431,34 @@ function createCard(movie, isSearchResult = false, isTrending = false) {
   return card;
 }
 
+// Display cards
 function displayMovieCards(movies, container) {
   container.innerHTML = '';
-  if (!movies?.length) {
-    container.innerHTML = `<p class="no-results">No results found.</p>`;
-    return;
-  }
+  if (!movies?.length) return container.innerHTML = `<p class="no-results">No results found.</p>`;
   const frag = document.createDocumentFragment();
   movies.forEach(m => frag.appendChild(createCard(m)));
   container.appendChild(frag);
 }
 
+// Skeleton loader
+function displaySkeletonLoader(container, count = 8) {
+  container.innerHTML = '';
+  for (let i = 0; i < count; i++) {
+    const s = document.createElement('div');
+    s.classList.add('skeleton');
+    container.appendChild(s);
+  }
+}
+
+// Fetch movies from OMDB
 async function fetchMovies(query, type = '', page = 1) {
   displaySkeletonLoader(allContainer);
   const url = `https://www.omdbapi.com/?s=${encodeURIComponent(query)}${type ? `&type=${type}` : ''}&page=${page}&apikey=${omdbApiKey}`;
-  console.log('OMDB Fetch URL:', url);
   const data = await fetchJson(url);
 
   if (!data || data.Response === "False") {
-    console.error('OMDB Error:', data?.Error || 'Unknown error');
-    allContainer.innerHTML = `<p class="no-results">${data?.Error || 'OMDB API not responding. Please try later.'}</p>`;
+    console.error('OMDB Error:', data?.Error || 'Unknown');
+    allContainer.innerHTML = `<p class="no-results">${data?.Error || 'OMDB API not responding'}</p>`;
     allPagination.innerHTML = '';
     return;
   }
@@ -458,6 +467,7 @@ async function fetchMovies(query, type = '', page = 1) {
   renderPagination(parseInt(data.totalResults), page);
 }
 
+// Pagination
 function renderPagination(totalResults, page) {
   allPagination.innerHTML = '';
   const totalPages = Math.ceil(totalResults / 10);
@@ -479,7 +489,7 @@ function renderPagination(totalResults, page) {
   allPagination.appendChild(createBtn('&raquo;', page === totalPages, () => fetchMovies(allSearchQuery, currentType, page + 1)));
 }
 
-// ✅ Debounced Live Search
+// Debounced Live Search
 let searchTimeout;
 if (searchInput) {
   searchInput.addEventListener('keyup', e => {
@@ -494,6 +504,7 @@ if (searchInput) {
   });
 }
 
+// OMDB Live Search
 async function fetchLiveSearchResults(query) {
   const url = `https://www.omdbapi.com/?s=${encodeURIComponent(query)}&apikey=${omdbApiKey}`;
   const data = await fetchJson(url);
@@ -506,24 +517,21 @@ async function fetchLiveSearchResults(query) {
   }
 }
 
-// ✅ Trending Movies with Error Handling
+// TMDB Trending with fallback
 async function fetchTrendingMovies() {
   try {
     const url = `https://api.themoviedb.org/3/trending/movie/week?api_key=${tmdbApiKey}`;
-    console.log('TMDB Fetch URL:', url);
     const data = await fetchJson(url);
-
     if (!data?.results?.length) throw new Error('No trending data');
-
     cachedTrending = data.results;
     renderTrending(cachedTrending);
-  } catch (err) {
-    console.error('TMDB Error:', err.message);
-    trendingContainer.innerHTML = `<p class="no-results">Trending movies are unavailable. Showing cached results if available.</p>`;
+  } catch {
+    trendingContainer.innerHTML = `<p class="no-results">Trending unavailable. Showing cached results if available.</p>`;
     if (cachedTrending.length) renderTrending(cachedTrending);
   }
 }
 
+// Render trending
 function renderTrending(movies) {
   const first = movies[0];
   heroTitle.innerText = first.title || '';
@@ -531,7 +539,7 @@ function renderTrending(movies) {
   heroFilmType.innerText = 'Movie';
   heroDate.innerText = first.release_date || '';
   heroPlot.innerText = first.overview || '';
-  heroRate.innerHTML = `<span style="background: yellow;font-size:10px;margin: 0 5px;padding:1px 3.5px;color: rgba(0,0,0,0.8);font-weight:800;">IMDB</span><i class="bi bi-star-fill" style="margin-right:5px"></i>${first.vote_average || 'N/A'}`;
+  heroRate.innerHTML = `<span style="background: yellow;font-size:10px;margin:0 5px;padding:1px 3.5px;color:rgba(0,0,0,0.8);font-weight:800;">IMDB</span><i class="bi bi-star-fill" style="margin-right:5px"></i>${first.vote_average || 'N/A'}`;
 
   trendingContainer.innerHTML = '';
   const frag = document.createDocumentFragment();
@@ -539,12 +547,14 @@ function renderTrending(movies) {
   trendingContainer.appendChild(frag);
 }
 
+// Display favorites
 function displayFavorites() {
   const favMovies = Object.values(favorites);
   if (favMovies.length) displayMovieCards(favMovies, favoritesContainer);
-  else favoritesContainer.innerHTML = '<p class="no-results">You have no favorites yet. Click the heart icon to add one.</p>';
+  else favoritesContainer.innerHTML = '<p class="no-results">No favorites yet. Click heart to add.</p>';
 }
 
+// Nav links
 function setupNavLinks() {
   const navActions = {
     'home-link': { allQuery: 'action', type: '' },
@@ -565,6 +575,7 @@ function setupNavLinks() {
   });
 }
 
+// Initialize app
 async function initialize() {
   await fetchTrendingMovies();
   await fetchMovies(allSearchQuery, currentType, currentPage);
@@ -572,5 +583,4 @@ async function initialize() {
   setupNavLinks();
 }
 initialize();
-
 
