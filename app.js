@@ -31,33 +31,6 @@ const genreMap = {
   10770: "TV Movie", 53: "Thriller", 10752: "War", 37: "Western"
 };
 
-// video section
-const heroVideo = document.getElementById('hero-video');
-const heroPlayBtn = document.getElementById('hero-play');
-const heroDownloadBtn = document.getElementById('hero-download');
-
-// Toggle play/pause
-heroPlayBtn.addEventListener('click', (e) => {
-  e.preventDefault(); // prevent default link behavior
-  if (heroVideo.paused) {
-    heroVideo.play();
-    heroPlayBtn.innerHTML = 'Pause <i class="bi bi-pause-fill"></i>';
-  } else {
-    heroVideo.pause();
-    heroPlayBtn.innerHTML = 'Play <i class="bi bi-play-fill"></i>';
-  }
-});
-
-// Download video
-heroDownloadBtn.addEventListener('click', (e) => {
-  e.preventDefault();
-  const link = document.createElement('a');
-  link.href = heroVideo.src;
-  link.download = 'video/john wick.webm'; 
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-});
 
 // Fetch helper
 const fetchJson = async (url) => {
@@ -307,6 +280,34 @@ function setupNavLinks() {
     });
   });
 }
+// video section
+const heroVideo = document.getElementById('hero-video');
+const heroPlayBtn = document.getElementById('hero-play');
+const heroDownloadBtn = document.getElementById('hero-download');
+
+// Toggle play/pause
+heroPlayBtn.addEventListener('click', (e) => {
+  e.preventDefault(); // prevent default link behavior
+  if (heroVideo.paused) {
+    heroVideo.play();
+    heroPlayBtn.innerHTML = 'Pause <i class="bi bi-pause-fill"></i>';
+  } else {
+    heroVideo.pause();
+    heroPlayBtn.innerHTML = 'Play <i class="bi bi-play-fill"></i>';
+  }
+});
+
+// Download video
+heroDownloadBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  const link = document.createElement('a');
+  link.href = heroVideo.src;
+  link.download = 'video/john wick.webm'; 
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+});
+
 
 // Initialize app
 async function initialize() {
