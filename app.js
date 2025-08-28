@@ -1,6 +1,6 @@
 const omdbApiKey = '1aca20d4';
-const tmdbApiKey = 'dacbf658ae443d8ce2c396b74f18dcfc';
-// const tmdbApiKey='97b6330d00714ee2843dc3ca25b5c89b'
+// const tmdbApiKey = 'dacbf658ae443d8ce2c396b74f18dcfc';
+const tmdbApiKey='97b6330d00714ee2843dc3ca25b5c89b'
 
 // DOM Elements
 const searchInput = document.getElementById('search_input');
