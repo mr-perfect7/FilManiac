@@ -41,8 +41,25 @@
           <h3 id="hero-rate"><span>IMDB</span><i class="bi bi-star-fill"></i> N/A</h3>
         </div>
         <div class="btns">
-          <a href="#" id="hero-play" >Play <i class="bi bi-play-fill"></i></a>
-          <a href="#" id="hero-download" ><i class="bi bi-download"></i> Download</a>
+          <a href="#" id="hero-play" onclick="alert('Video is playing!!')>Play <i class="bi bi-play-fill"></i></a>
+          <a href="#" id="hero-download" onclick="downloadVideo()" ><i class="bi bi-download"></i> Download</a>
+          
+
+<script>
+function downloadVideo() {
+    // URL of the video file
+    const videoUrl = 'video/myvideo.mp4';
+    
+    // Create a temporary link element
+    const a = document.createElement('a');
+    a.href = videoUrl;
+    a.download = 'myvideo.mp4'; // File name for download
+    document.body.appendChild(a);
+    a.click(); // Trigger download
+    document.body.removeChild(a);
+}
+</script>
+
         </div>
       </div>
     </div>
